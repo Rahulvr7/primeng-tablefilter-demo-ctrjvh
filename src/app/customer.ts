@@ -8,15 +8,39 @@ export interface Representative {
   image?: string;
 }
 
-export interface Customer {
-  id?: number;
-  name?: string;
-  country?: Country;
-  company?: string;
-  date?: string | Date;
-  status?: string;
-  activity?: number;
-  representative?: Representative;
-  verified?: boolean;
-  balance?: boolean;
+export interface Grid {
+  deviceId: number;
+  serialNumber: string;
+  productDescription: string;
+  productTypeId?: number;
+  productTypeName?: string;
+  productGroupId?: number;
+  productGroupName?: string;
+  productNumber: string;
+  bornOnDate: string;
+  deviceAge: number;
+  maintenanceStatus: string;
+  maintenanceStatusCode: string;
+  maintenanceRecommendation: string;
+  maintenanceRecommendationCode: string;
+  lastKnownLocation: string;
+  lastConnectionDate: string | Date;
+  connectionStatus: string;
+  isLoaner: boolean;
+  loanerDueDate: string;
+  isLoanerDueSoon: string;
+  isLoanerPastDue: string;
+  loanerOrderNumber: string;
+  usagePatternValue: number;
+  usagePatternUnitOfMeasure: string;
+  usagePatternNumberOfDays: number;
+  productGroupImage: string;
+  facilityName: string;
+  inCart: boolean;
+  countOfHighPriorityEvents: number;
+  runtime: number;
+  runtimeUnitOfMeasure: string;
+  workOrderNumber?: string;
+  maintenanceEventStartDate?: string;
+  maintenanceEventCompleteDate?: string;
 }

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from "@angular/core";
-import { Customer, Representative } from "./customer";
+import { Grid, Representative } from "./customer";
 import { CustomerService } from "./customerservice";
-import { MessageService } from "primeng/api";
+import { FilterService, MessageService } from "primeng/api";
 
 @Component({
   selector: "app-root",
@@ -9,7 +9,7 @@ import { MessageService } from "primeng/api";
   providers: [MessageService]
 })
 export class AppComponent {
-  customers: Customer[];
+  customers: Grid[];
 
   representatives: Representative[];
 
@@ -19,7 +19,7 @@ export class AppComponent {
 
   activityValues: number[] = [0, 100];
 
-  constructor(private customerService: CustomerService) {}
+  constructor(private customerService: CustomerService, private filterService: FilterService) {}
 
   ngOnInit() {
     this.customerService.getCustomersLarge().then(customers => {
@@ -27,7 +27,14 @@ export class AppComponent {
       this.loading = false;
 
       this.customers.forEach(
-        customer => (customer.date = new Date(customer.date))
+        customer => {
+          if(customer.lastConnectionDate){
+            (customer.lastConnectionDate = new Date(customer.lastConnectionDate))
+          }
+          if(customer.runtime){
+            customer.runtime = parseFloat(customer.runtime.toFixed(2));
+          }
+        }
       );
     });
 
