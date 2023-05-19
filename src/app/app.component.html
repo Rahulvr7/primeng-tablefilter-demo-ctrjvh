@@ -1,0 +1,48 @@
+<p-table #dt2 [value]="customers" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+	[rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers" [paginator]="true"
+	currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+	[globalFilterFields]="['name','country.name','representative.name','status']">
+	<ng-template pTemplate="header">
+		<tr>
+			<th>Name</th>
+			<th>Country</th>
+			<th>Date</th>
+			<th>Balance</th>
+		</tr>
+		<tr>
+			<th>
+				<p-columnFilter type="text" field="name"></p-columnFilter>
+			</th>
+			<th>
+				<p-columnFilter type="text" field="country.name"></p-columnFilter>
+			</th>
+			<th>
+				<p-columnFilter type="date" field="date"></p-columnFilter>
+			</th>
+			<th>
+				<p-columnFilter type="numeric" field="balance"></p-columnFilter>
+			</th>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-customer>
+		<tr>
+			<td>
+				{{customer.name}}
+			</td>
+			<td>
+				<span class="image-text">{{customer.country.name}}</span>
+			</td>
+			<td>
+				<span>{{customer.date | date: 'MM/dd/yyyy'}}</span>
+			</td>
+			<td>
+				<span>{{customer.balance | currency:'USD':'symbol'}}</span>
+			</td>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="emptymessage">
+		<tr>
+			<td colspan="5">No customers found.</td>
+		</tr>
+	</ng-template>
+</p-table>
