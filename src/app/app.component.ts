@@ -1,7 +1,7 @@
 import { Component, ViewChild } from "@angular/core";
 import { Grid, Representative } from "./customer";
 import { CustomerService } from "./customerservice";
-import { FilterService, MessageService } from "primeng/api";
+import { FilterMatchMode, FilterService, MessageService, SelectItem } from "primeng/api";
 
 @Component({
   selector: "app-root",
@@ -10,12 +10,8 @@ import { FilterService, MessageService } from "primeng/api";
 })
 export class AppComponent {
   customers: Grid[];
-
-  representatives: Representative[];
-
-  statuses: any[];
-
   loading: boolean = true;
+  numericMatchModeOptions: SelectItem[];
 
   activityValues: number[] = [0, 100];
 
@@ -31,33 +27,28 @@ export class AppComponent {
           if(customer.lastConnectionDate){
             (customer.lastConnectionDate = new Date(customer.lastConnectionDate))
           }
-          if(customer.runtime){
-            customer.runtime = parseFloat(customer.runtime.toFixed(2));
-          }
+          // if(customer.runtime){
+          //   customer.runtime = parseFloat(customer.runtime.toFixed(2));
+          // }
         }
       );
     });
+    const customFilterName = 'decimalEquals';
 
-    this.representatives = [
-      { name: "Amy Elsner", image: "amyelsner.png" },
-      { name: "Anna Fali", image: "annafali.png" },
-      { name: "Asiya Javayant", image: "asiyajavayant.png" },
-      { name: "Bernardo Dominic", image: "bernardodominic.png" },
-      { name: "Elwin Sharvill", image: "elwinsharvill.png" },
-      { name: "Ioni Bowcher", image: "ionibowcher.png" },
-      { name: "Ivan Magalhaes", image: "ivanmagalhaes.png" },
-      { name: "Onyama Limba", image: "onyamalimba.png" },
-      { name: "Stephen Shaw", image: "stephenshaw.png" },
-      { name: "XuXue Feng", image: "xuxuefeng.png" }
+    this.filterService.register(customFilterName, (value: number,filter: string): boolean => {
+      if (filter === undefined || filter === null || filter.toString().trim() === '') {
+        return true;
+    }
+    if (value === undefined || value === null) {
+        return false;
+    }
+    return (value.toFixed(2)).toString() === filter.toString();
+    });
+    this.numericMatchModeOptions = [
+      { label: "Less Than", value: FilterMatchMode.LESS_THAN },
+      { label: "Greater Than", value: FilterMatchMode.GREATER_THAN },
+      { label: "Equals", value: customFilterName}
     ];
 
-    this.statuses = [
-      { label: "Unqualified", value: "unqualified" },
-      { label: "Qualified", value: "qualified" },
-      { label: "New", value: "new" },
-      { label: "Negotiation", value: "negotiation" },
-      { label: "Renewal", value: "renewal" },
-      { label: "Proposal", value: "proposal" }
-    ];
   }
 }

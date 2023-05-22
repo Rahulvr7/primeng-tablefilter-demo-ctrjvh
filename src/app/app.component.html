@@ -19,7 +19,7 @@
 				<p-columnFilter type="date" field="lastConnectionDate" [prefix]="'>'"></p-columnFilter>
 			</th>
 			<th>
-				<p-columnFilter type="numeric" field="runtime" [prefix]="'<'" [minFractionDigits] ="0" [maxFractionDigits]="2"></p-columnFilter>
+				<p-columnFilter type="numeric" field="runtime" [matchModeOptions]="numericMatchModeOptions" [prefix]="'<'" [minFractionDigits] ="0" [maxFractionDigits]="2"></p-columnFilter>
 			</th>
 		</tr>
 	</ng-template>
@@ -35,7 +35,7 @@
 				<span>{{customer.lastConnectionDate | date: 'dd/MM/yyyy'}}</span>
 			</td>
 			<td>
-				<span>{{customer.runtime | number}}</span>
+				<span>{{customer.runtime | number: '1.0-2'}}</span>
 			</td>
 		</tr>
 	</ng-template>
