@@ -10,6 +10,7 @@ import { FilterMatchMode, FilterService, MessageService, SelectItem } from "prim
 })
 export class AppComponent {
   customers: Grid[];
+  prefix:string ='=';
   loading: boolean = true;
   numericMatchModeOptions: SelectItem[];
 
